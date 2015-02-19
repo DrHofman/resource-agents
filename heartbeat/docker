@@ -265,6 +265,11 @@ docker_start()
 		run_opts="$run_opts $OCF_RESKEY_run_opts"
 	fi
 
+	if [ -n "$OCF_RESKEY_CRM_meta_docker_env" ]; then
+		eval docker_env=\${$OCF_RESKEY_CRM_meta_docker_env}
+		run_opts="$run_opts -e $OCF_RESKEY_CRM_meta_docker_env=$docker_env"
+        fi
+
 	if [ $REQUIRE_IMAGE_PULL -eq 1 ]; then
 		ocf_log notice "Beginning pull of image, ${OCF_RESKEY_image}"
 		docker pull "${OCF_RESKEY_image}"
